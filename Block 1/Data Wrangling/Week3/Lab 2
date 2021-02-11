@@ -1,0 +1,60 @@
+####QUESTION 1
+CREATE TABLE Students (
+	sid INTEGER,
+	name text,
+	major text,
+	top_credits integer,
+	gpa real,
+	PRIMARY KEY (sid));
+	
+	
+CREATE TABLE Enrolled (
+	sid INTEGER,
+	semester text CHECK (semester IN ('Q1','Q2','Q3','Q4')),
+	cid INTEGER,
+	year integer CHECK (year>2000),
+	grade real,
+	PRIMARY KEY (sid,cid,semester,year));
+	
+		
+CREATE TABLE Course (
+	cid INTEGER,
+	title text,
+	dept_name text,
+	credits integer,
+	PRIMARY KEY (cid));
+	
+
+ALTER TABLE Enrolled
+	ADD CONSTRAINT  fk_Course
+	FOREIGN KEY (cid) REFERENCES Course(cid);			
+
+ALTER TABLE Enrolled
+	ADD CONSTRAINT  fk_Students
+	FOREIGN KEY (sid) REFERENCES Students(sid);	
+	
+##QUESTION 2
+INSERT INTO Students (sid, name, major, top_credits, gpa) 
+	Values (1, 'Giannis', 'ADS', 15, 5); 
+INSERT INTO Students (sid, name, major, top_credits, gpa)
+	Values (2, 'Pope', 'ADS', 15, 3); 
+INSERT INTO Students (sid, name, major, top_credits, gpa) 
+	Values (3, 'popy', 'ADS', 15, 1); 
+INSERT INTO Students (sid, name, major, top_credits, gpa) 
+	Values (4, 'Donald', 'ADS', 15, 4);
+	
+INSERT INTO Course (cid, title, dept_name, credits) 
+	Values(1, 'ADS', 'Comp Science', 20); 
+INSERT INTO Course (cid, title, dept_name, credits) 
+	Values(2, 'DataWrang', 'Comp Science', 30); 
+INSERT INTO Course (cid, title, dept_name, credits) 
+	Values(3, 'Coloquium', 'Comp Science', 10); 
+INSERT INTO Course (cid, title, dept_name, credits) 
+	Values(4, 'Thesis', 'Math', 10)	
+
+INSERT INTO Enrolled ( sid, cid, semester, year, grade)  ##TO KANEIS 4 FORES AUTO ALLAZONTAS TA NOUMERA
+Values (4, 2, 'Q4', 2001, 20) 	
+
+##Question 3
+select Enrolled.sid as Student_Number_in_Enrolled, Enrolled.cid, Students.name 
+from Enrolled,STUDENTS where students.sid = 5	
