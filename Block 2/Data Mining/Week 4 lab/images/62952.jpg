@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>IASToppers | UPSC IAS Exam Online Preparation | IAS Strategy Syllabus</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" id="fontawesome-css" href="https://use.fontawesome.com/releases/v5.0.1/css/all.css?ver=4.9.1" type="text/css" media="all">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://cdn.ckeditor.com/4.9.2/full-all/ckeditor.js"></script>
+    <script> CKEDITOR.config.forcePasteAsPlainText = true; </script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-168258596-1"></script>
+	<script>
+	 window.dataLayer = window.dataLayer || [];
+	 function gtag(){dataLayer.push(arguments);}
+	 gtag('js', new Date());
+
+	 gtag('config', 'UA-78055264-1');
+	</script>
+<link rel="stylesheet" href="styles.0c2be5183e94f7f48ac6.css"></head>
+<div id='scroll'></div>
+<body>
+    <app-root></app-root>
+<script src="runtime-es2015.e7b5dee27ffb3bfddf31.js" type="module"></script><script src="runtime-es5.e7b5dee27ffb3bfddf31.js" nomodule defer></script><script src="polyfills-es5.23420b468db45a685d22.js" nomodule defer></script><script src="polyfills-es2015.527fd38c3510dd1ba9e1.js" type="module"></script><script src="scripts.b285225015c26ee74743.js" defer></script><script src="main-es2015.8678410d24d5e9e56fd5.js" type="module"></script><script src="main-es5.8678410d24d5e9e56fd5.js" nomodule defer></script></body>
+</html>
