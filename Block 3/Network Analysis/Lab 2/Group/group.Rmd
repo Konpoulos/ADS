@@ -1,0 +1,195 @@
+---
+title: "Group Lab assignment 2 - Social network analysis and modelling "
+author: "Jimcurrywang"
+mainfont: Arial
+fontsize: 12pt
+urlcolor: blue
+output:
+  html_document:
+    highlight: default
+    theme: paper
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    latex_engine: xelatex
+    toc: yes
+    toc_depth: '5'
+params:
+  rcode: true
+  answers: true
+---
+
+## import packages
+```{r, echo=FALSE}
+library(igraph)
+library(network)
+library(intergraph)
+library(RColorBrewer)
+```
+
+# Exercise 1 Build and analyse a small network from Facebook
+
+```{r}
+nodes <- read.csv("data/Facebook_att.csv", header = TRUE)
+links <- read.csv("data/Facebook_edge.csv", header = TRUE)
+facebook <- graph_from_data_frame(d = links, vertices = nodes$NodeID, directed = FALSE)
+facebook_net <- asNetwork(facebook)
+```
+
+```{r}
+# Load in other attributes.
+facebook_net %v% "vertex.names"        <- nodes$vertex.names
+facebook_net %v% "sex"                 <- nodes$sex
+facebook_net %v% "friend_count"        <- nodes$friend_count
+facebook_net %v% "group"               <- nodes$group
+facebook_net %v% "mutual_friend_count" <- nodes$mutual_friend_count
+facebook_net %v% "na"                  <- nodes$na
+facebook_net %v% "relationship_status" <- nodes$relationship_status
+```
+
+
+
+
+```{r}
+summary(facebook_net)
+```
+
+
+```{r}
+plot(facebook_net, vertex.cex = 1.2, main = "Basic plot of Douglas’s Facebook friends")
+```
+
+### Question 1, 2 points
+
+Check out the Summary and Plot, how many friends do Douglas have on Facebook? Is this a directed or undirected graph and why? What is the meaning of the link between nodes in the plot? 
+
+```{r}
+
+```
+
+# Measure node-level metrics
+
+### Question 2, 3 points
+
+Compare the degree, closeness and betweenness of Vertex 1 to the values of other nodes in the network. How will you evaluate the role of Vertex 1 in this network?
+
+```{r}
+
+```
+
+
+### Question 3, 5 points
+
+In the lecture, we introduced a few measures of centrality: degree, betweenness, eigenvector. 
+Try to find top 5 nodes according to a) degree, b) betweenness, c) closeness and d) eigenvector. 
+And develop the scatter plot between different metrics, you can refer to the code below. 
+
+Discuss with your group and describe to your teacher, 
+  1) how well does the top 5 nodes by different metrics overlap with each other?
+  2) why we need more than one metric to define centrality? 
+
+```{r}
+# par(mfrow = c(2,2))
+#plot(deg, cls, main = "Degree versus closeness", 
+#     xlab = "Degree", ylab = "Closeness") 
+#plot(deg, btw, main = "Degree versus betweenness",
+#     xlab = "Degree", ylab = "Betweenness")
+#plot(deg, eig$vector, main = "Degree versus eigenvector",
+#     xlab = "Degree", ylab = "Eigenvector")
+#plot(deg, lcl, main = "Degree versus local clustering",
+#     xlab = "Degree", ylab = "Local clustering")
+```
+
+
+# Measure group-level metrics
+
+### Question 4, 3 point 
+Discuss within your group on how you understand each of these measures. And describe to your teacher, 1) why diameter should be larger than 1, and other metrics such as edge density and transitivity are smaller than 1? 2) is this a tightly knitted network? 
+```{r}
+
+```
+
+# Detect the component and community
+
+### Question 5, 3 point
+
+Reflect on what we have discussed about the Facebook network on Slide 42 of the lecture. Do you think this small network of Douglas resonates some general patterns of the entire Facebook network in terms of the components size and number? How can you explain such an observation
+
+```{r}
+group <- as.factor(get.vertex.attribute(facebook_net, attrname = 'group'))
+
+pal <- brewer.pal(nlevels(group), "Set1")
+
+plot(facebook_net, vertex.col = pal[group], vertex.cex = 1.5, 
+     main = "Plot of Facebook Data colored by friend type")
+legend(x = "bottomleft", legend = levels(group), col = pal, 
+       pch = 19, pt.cex = 1.2, bty = "n", title = "Friend type")
+
+```
+
+### Question 6, 3 point
+
+Based upon the plot you produced, discuss with your group and describe to your teacher the distinctions of the components. Do you find instances of intermingling of Douglas friends (i.e., belong to different groups but end up in the same component)? Do you find any isolated groups here? What can you conclude about the mixing of Douglas' Facebook friends? 
+
+```{r}
+
+```
+
+### Question 7, 3 point
+
+Using the above code as a reference, check out the attributes of other factors (e.g., sex, relationship_status) in terms of people in the same components. Note that you can specify the 'attrname' parameter within the function 'get.vertex.attribute'. Discuss with your group and describe to your teacher whether or not these factors are the keys in determining the formation of components
+
+```{r}
+
+```
+
+
+
+### Question 8, 3 point
+
+From this analysis, what do you observe from the density values? Are they similar across different groups? What is the minimum and maximum value you observed here and how do you explain that?
+
+```{r}
+sapply(levels(group), function(x) {
+  y <- get.inducedSubgraph(facebook_net, 
+                           which(facebook_net %v% "group" == x))
+  paste0("Density for ", x, " friends is ", 
+         edge_density(asIgraph(y)))
+})
+```
+
+
+### Question 9, 3 point
+
+So far, we analysed the subgroup structure only according to the original friend groups of Douglas. However, is this enough? Is the place where you know this person (e.g., workplace, book club) sufficient to explain the structure of your social network?
+
+To answer this question, search and discuss within your group on the theory of 'community detection'. Describe to your teacher what community detection is, and why it is useful to understand complex networks 
+
+
+```{r}
+
+```
+
+
+### Question 10, 2 point
+
+Compare the plots that you generate from the different algorithms; do you find them similar and why or why not? 
+
+```{r}
+cw <- cluster_walktrap(facebook)
+plot(cw, facebook, vertex.label = V(facebook)$group, 
+     main = "Walktrap")
+ceb <- cluster_edge_betweenness(facebook)
+plot(ceb, facebook, vertex.label = V(facebook)$group, 
+     main = "Edge Betweenness")
+cfg <- cluster_fast_greedy(facebook)
+plot(cfg, facebook, vertex.label = V(facebook)$group,
+     main = "Fast Greedy")
+clp <- cluster_label_prop(facebook)
+plot(clp, facebook, vertex.label = V(facebook)$group,
+     main = "Label Prop")
+cle <- cluster_leading_eigen(facebook)
+plot(cle, facebook, vertex.label = V(facebook)$group,
+     main = "Leading Eigen")
+```
+
